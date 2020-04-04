@@ -6,6 +6,7 @@ import OrderDetails from './components/orders/OrderDetails';
 import Login from './components/auth/Login';
 import Register from './components/auth/Register';
 import CreateOrder from './components/orders/CreateOrder';
+import COrder from './components/features/Checkout';
 
 function App() {
 	return (
@@ -18,6 +19,7 @@ function App() {
           <Route path='/login' component={Login} />
           <Route path='/register' component={Register} />
           <Route path='/create-order' component={CreateOrder} />
+          <Route path='/check' component={COrder} />
 				</Switch>
 			</div>
 		</BrowserRouter>
