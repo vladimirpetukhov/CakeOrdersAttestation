@@ -6,11 +6,17 @@ import Checkbox from '@material-ui/core/Checkbox';
 import { TextareaAutosize } from '@material-ui/core';
 
 export default class AddressForm extends Component {
-	handleChange = e => {
-		this.setState({
-			[e.target.id]: e.target.value,
-		});
+    constructor(props){
+        super(props);
+       
+    }
+
+    state = {
+		firstName: '',
+		lastName: '',
 	};
+    
+	
 
 	render() {
 		return (
@@ -19,11 +25,11 @@ export default class AddressForm extends Component {
 				<Grid container spacing={3}>
 					<Grid item xs={12} sm={6}>
 						<label htmlFor="firstName">Име</label>
-						<input id="firstName" name="firstName" onChange={this.handleChange} />
+						<input id="firstName" name="firstName"  />
 					</Grid>
 					<Grid item xs={12} sm={6}>
 						<label htmlFor="lastName">Бащино име</label>
-						<input id="lastName" name="lastName" onChange={this.handleChange} />
+						<input id="lastName" name="lastName" />
 					</Grid>
 					<Grid item xs={12}>
 						<label htmlFor="lastName">Адрес 1</label>

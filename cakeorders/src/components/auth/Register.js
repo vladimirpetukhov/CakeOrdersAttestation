@@ -22,8 +22,11 @@ class Register extends Component {
 	render() {
 		return (
 			<div className="row ">
-				<h5 className="white-text">Регистрация</h5>
+				
 				<form className="white z-depth-5 col s8  offset-s2" onSubmit={this.handleSubmit}>
+                    <div className="row ">
+                    <h4 className="blue-text center ">Регистрация</h4>
+                    </div>
 					<div className="row">
 						<div className="input-field col s12">
 							<label htmlFor="username">Потребителско име:</label>
@@ -54,7 +57,7 @@ class Register extends Component {
 							<input type="text" id="personalNumber" onChange={this.handleChange} />
 						</div>
 						<div className="input-field col s12">
-							<Button className="btn red lighten-1 z-depth-0 left-btn">Регистрация</Button>
+							<Button className="btn blue lighten-1 z-depth-0 left-btn">Регистрация</Button>
 
 							<Button type="reset" className="btn green lighten-1 z-depth-0 ">
 								Изчисти

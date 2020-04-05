@@ -1,47 +1,135 @@
 import React, { Component } from 'react';
-import COrder from '../features/Checkout';
+import PersonalInfo from './PersonalInfo';
+import JobDetails from './OrderDetails';
+import AllInfo from './AllInfo';
+import PaymentInfo from './PaymentInfo';
+import { makeStyles } from '@material-ui/core/styles';
 
+const useStyles = makeStyles(theme => ({
+	appBar: {
+		position: 'relative',
+	},
+	layout: {
+		width: 'auto',
+		marginLeft: theme.spacing(2),
+		marginRight: theme.spacing(2),
+		[theme.breakpoints.up(600 + theme.spacing(2) * 2)]: {
+			width: 600,
+			marginLeft: 'auto',
+			marginRight: 'auto',
+		},
+	},
+	paper: {
+		marginTop: theme.spacing(3),
+		marginBottom: theme.spacing(3),
+		padding: theme.spacing(2),
+		[theme.breakpoints.up(600 + theme.spacing(3) * 2)]: {
+			marginTop: theme.spacing(6),
+			marginBottom: theme.spacing(6),
+			padding: theme.spacing(3),
+		},
+	},
+	stepper: {
+		padding: theme.spacing(3, 0, 5),
+	},
+	buttons: {
+		display: 'flex',
+		justifyContent: 'flex-end',
+	},
+	button: {
+		marginTop: theme.spacing(3),
+		marginLeft: theme.spacing(1),
+	},
+}));
 
-
-class CreateOrder extends Component {
+export class StepForm extends Component {
 	state = {
-		type: 'Тип',
-		content: '',
-		acceptDate: Date.now(),
-		deliveryDate: '',
-		shopName: '',
-		employerName: '',
-		price: '',
-		capro: '',
-		remains: '',
-		delivery: '',
-		certificate: '',
-		address: '',
+		step: 1,
+
+		// step 1
+		firstName: '',
+		lastName: '',
+		email: '',
+
+		// step 2
+		jobTitle: '',
+		jobCompany: '',
+		jobLocation: '',
+
+		// step 3
+		jobTitle: '',
+		jobCompany: '',
+		jobLocation: '',
 	};
-	handleChange = e => {
+
+	nextStep = () => {
+		const { step } = this.state;
+
 		this.setState({
-			[e.target.id]: e.target.value,
+			step: step + 1,
 		});
-	};
-	handleSubmit = e => {
-		e.preventDefault();
 		console.log(this.state);
 	};
+
+	prevStep = () => {
+		const { step } = this.state;
+		this.setState({
+			step: step - 1,
+		});
+	};
+
+	handleChange = input => e => {
+		this.setState({ [input]: e.target.value });
+	};
+
+	calculateRest = e => {
+		this.setState({
+            rest: parseFloat(this.price - this.capro).toFixed(2),
+            lblRest:parseFloat(this.price - this.capro).toFixed(2)
+		});
+	};
+
+	showStep = () => {
+		const { step, firstName, lastName, address, phone, city, price, capro, rest,lblRest } = this.state;
+
+		if (step === 1)
+			return (
+				<PersonalInfo
+					nextStep={this.nextStep}
+					handleChange={this.handleChange}
+					firstName={firstName}
+					lastName={lastName}
+				/>
+			);
+		if (step === 2)
+			return <JobDetails nextStep={this.nextStep} prevStep={this.prevStep} handleChange={this.handleChange} />;
+		if (step === 3)
+			return (
+				<PaymentInfo
+					nextStep={this.nextStep}
+					prevStep={this.prevStep}
+					handleChange={this.handleChange}
+					price={price}
+					capro={capro}
+					rest={rest}
+                    calculateRest={this.calculateRest}
+                    lblRest={lblRest}
+				/>
+			);
+		if (step === 4) return <AllInfo firstName={firstName} lastName={lastName} prevStep={this.prevStep} />;
+	};
+
 	render() {
+		const { step } = this.state;
+
 		return (
-			<div className="container">
-				<form  onSubmit={this.handleSubmit}>
-					<h5 className="grey-text text-darken-3">Create a New Project</h5>
-					<div className="row">
-						<COrder />						
-					</div>
-					<div className="input-field">
-						<button className="btn pink lighten-1">Create</button>
-					</div>
-				</form>
-			</div>
+			<>
+				<h6 className="white-text center">Стъпка {step} от 4.</h6>
+
+				{this.showStep()}
+			</>
 		);
 	}
 }
 
-export default CreateOrder;
+export default StepForm;

@@ -53,24 +53,37 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+
+
 const steps = ['Адрес', 'Разплащане', 'Инфо за продукта'];
 
-function getStepContent(step) {
-  switch (step) {
-    case 0:
-      return <AddressForm />;
-    case 1:
-      return <PaymentForm />;
-    case 2:
-      return <OrderProductInfo />;
-    default:
-      throw new Error('Unknown step');
-  }
-}
+
+
+
 
 const COrder=()=> {
   const classes = useStyles();
-  const [activeStep, setActiveStep] = React.useState(0);
+  const [activeStep, setActiveStep,firstName] = React.useState(0);
+  const handleChange = e => {
+    this.setState({
+        [e.target.id]: e.target.value,
+    });
+    this.props.nextStep();
+    debugger
+    console.log(this.props);
+};
+  const getStepContent=(step)=> {
+    switch (step) {
+      case 0:
+        return <AddressForm onChange={handleChange}/>;
+      case 1:
+        return <PaymentForm />;
+      case 2:
+        return <OrderProductInfo />;
+      default:
+        throw new Error('Unknown step');
+    }
+  }
 
   const handleNext = () => {
     setActiveStep(activeStep + 1);
@@ -103,8 +116,7 @@ const COrder=()=> {
                   Thank you for your order.
                 </Typography>
                 <Typography variant="subtitle1">
-                  Your order number is #2001539. We have emailed your order confirmation, and will
-                  send you an update when your order has shipped.
+                  Поръчка с номер {} беше изпратена успешно!
                 </Typography>
               </React.Fragment>
             ) : (
@@ -122,7 +134,7 @@ const COrder=()=> {
                     onClick={handleNext}
                     className={classes.button}
                   >
-                    {activeStep === steps.length - 1 ? 'Place order' : 'Next'}
+                    {activeStep === steps.length - 1 ? 'Завърши' : 'Следваща'}
                   </Button>
                 </div>
               </React.Fragment>
