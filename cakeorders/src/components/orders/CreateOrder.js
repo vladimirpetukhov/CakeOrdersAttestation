@@ -4,6 +4,7 @@ import JobDetails from './OrderDetails';
 import AllInfo from './AllInfo';
 import PaymentInfo from './PaymentInfo';
 import { makeStyles } from '@material-ui/core/styles';
+import OrderDetails from './OrderDetails';
 
 const useStyles = makeStyles(theme => ({
 	appBar: {
@@ -49,12 +50,15 @@ export class StepForm extends Component {
 		// step 1
 		firstName: '',
 		lastName: '',
-		email: '',
+		address: '',
+		phone: '',
+		city: '',
 
 		// step 2
 		jobTitle: '',
 		jobCompany: '',
 		jobLocation: '',
+		data: '',
 
 		// step 3
 		jobTitle: '',
@@ -78,19 +82,20 @@ export class StepForm extends Component {
 		});
 	};
 
+
 	handleChange = input => e => {
 		this.setState({ [input]: e.target.value });
 	};
 
 	calculateRest = e => {
 		this.setState({
-            rest: parseFloat(this.price - this.capro).toFixed(2),
-            lblRest:parseFloat(this.price - this.capro).toFixed(2)
+			rest: parseFloat(this.price - this.capro).toFixed(2),
+			lblRest: parseFloat(this.price - this.capro).toFixed(2),
 		});
 	};
 
 	showStep = () => {
-		const { step, firstName, lastName, address, phone, city, price, capro, rest,lblRest } = this.state;
+		const { step, firstName, lastName, address, phone, city, price, capro, rest, lblRest, data } = this.state;
 
 		if (step === 1)
 			return (
@@ -99,10 +104,19 @@ export class StepForm extends Component {
 					handleChange={this.handleChange}
 					firstName={firstName}
 					lastName={lastName}
+					address={address}
+					phone={phone}
+					city={city}
 				/>
 			);
 		if (step === 2)
-			return <JobDetails nextStep={this.nextStep} prevStep={this.prevStep} handleChange={this.handleChange} />;
+			return (
+				<OrderDetails
+					nextStep={this.nextStep}
+					prevStep={this.prevStep}
+					data={data}
+				/>
+			);
 		if (step === 3)
 			return (
 				<PaymentInfo
@@ -112,8 +126,8 @@ export class StepForm extends Component {
 					price={price}
 					capro={capro}
 					rest={rest}
-                    calculateRest={this.calculateRest}
-                    lblRest={lblRest}
+					calculateRest={this.calculateRest}
+					lblRest={lblRest}
 				/>
 			);
 		if (step === 4) return <AllInfo firstName={firstName} lastName={lastName} prevStep={this.prevStep} />;
