@@ -1,13 +1,14 @@
 import React from 'react';
 import OrderSummary from './OrderSummary';
 
-const ListOrders = () => {
+const ListOrders = ({ orders }) => {
+      console.log(orders)
 	return (
 		<div className="order-list section">
-            <OrderSummary />
-            <OrderSummary />
-            <OrderSummary />
-            <OrderSummary />
+			{orders &&
+				orders.map((order) => {
+					return <OrderSummary order={order} key={order.id} />;
+				})}
 		</div>
 	);
 };

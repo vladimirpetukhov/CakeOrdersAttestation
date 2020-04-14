@@ -1,0 +1,26 @@
+
+
+
+#navbar-custom{
+    background-color: #388e3c;
+}
+
+#navbar-custom ul li{
+    color: darkred;
+    
+    font-size: 2em;
+    
+}
+
+
+
+.navbar.navbar-dark .navbar-toggler{
+    background-color: #ec1c24;
+}
+
+.logo-header{
+    height: 120px;
+    padding: 5px;
+    max-height: 12vh;
+}
+

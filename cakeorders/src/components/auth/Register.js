@@ -1,73 +1,120 @@
-import React, { Component } from 'react';
-import { Button, ButtonGroup } from '@material-ui/core';
+import React, { useState } from 'react';
+import { MDBCol, MDBContainer, MDBRow,MDBSelect } from 'mdbreact';
+import Form from 'react-bootstrap/Form';
+import PetukhovaLogo from '../features/PetukhovaLogo';
 
-class Register extends Component {
-	state = {
-		username: '',
-		password: '',
-		confirmPassword: '',
-		firstName: '',
-		middleName: '',
-		lastName: '',
+const formFields = {
+	username: '',
+	password: '',
+	confirmPassword: '',
+	firstName: '',
+	middleName: '',
+	lastName: '',
+	personalNumber: '',
+	keyNumber: '',
+	email: '',
+};
+
+function Register() {
+	const formGroup = (label, type, placeholder, name, fields, setFields) => {
+		return (
+			<Form.Group>
+				<Form.Label className="small  mb-0 active">{label}</Form.Label>
+				<Form.Control
+					type={type}
+					placeholder={placeholder}
+					value={fields[name]}
+					name={name}
+					data-testid={'register-' + name}
+					onChange={(e) => handleChange(e, fields, setFields, false)}
+				/>
+			</Form.Group>
+		);
 	};
-	handleChange = e => {
-		this.setState({
-			[e.target.id]: e.target.value,
+	const [fields, setFields] = useState(formFields);
+
+
+	const handleChange = (event, fields, fieldsSet, isCheckbox) => {
+		event.persist();
+
+		var fieldValue;
+
+		isCheckbox ? (fieldValue = event.target.checked) : (fieldValue = event.target.value);
+
+		fieldsSet({
+			...fields,
+			[event.target.name]: fieldValue,
 		});
 	};
-	handleSubmit = e => {
-		e.preventDefault();
-		console.log(this.state);
-	};
-	render() {
-		return (
-			<div className="row ">
-				
-				<form className="white z-depth-5 col s8  offset-s2" onSubmit={this.handleSubmit}>
-                    <div className="row ">
-                    <h4 className="blue-text center ">Регистрация</h4>
-                    </div>
-					<div className="row">
-						<div className="input-field col s12">
-							<label htmlFor="username">Потребителско име:</label>
-							<input id="username" type="text" onChange={this.handleChange} />
-						</div>
-						<div className="input-field col s4">
-							<label htmlFor="firstName">Име:</label>
-							<input id="firstName" type="text" onChange={this.handleChange} />
-						</div>
-						<div className="input-field col s4">
-							<label htmlFor="middleName">Бащино име:</label>
-							<input id="middleName" type="text" onChange={this.handleChange} />
-						</div>
-						<div className="input-field col s4">
-							<label htmlFor="lastName">Фамилно име:</label>
-							<input id="lastName" type="text" onChange={this.handleChange} />
-						</div>
-						<div className="input-field col s6">
-							<label htmlFor="password">Парола:</label>
-							<input type="password" id="password" onChange={this.handleChange} />
-						</div>
-						<div className="input-field col s6">
-							<label htmlFor="confirmPassword">Повтори парола:</label>
-							<input type="password" id="confirmPassword" onChange={this.handleChange} />
-						</div>
-						<div className="input-field col s12">
-							<label htmlFor="personalNumber">Номер на договор:</label>
-							<input type="text" id="personalNumber" onChange={this.handleChange} />
-						</div>
-						<div className="input-field col s12">
-							<Button className="btn blue lighten-1 z-depth-0 left-btn">Регистрация</Button>
 
-							<Button type="reset" className="btn green lighten-1 z-depth-0 ">
-								Изчисти
-							</Button>
+	const handleSubmit = (e) => {
+		e.preventDefault();
+		console.log(fields);
+	};
+
+	return (
+		<MDBContainer>
+			<PetukhovaLogo/>
+			<MDBRow className="m-0">
+				<Form
+					onSubmit={handleSubmit}
+					className="col-lg-8 col-md-10 mx-auto text-left shadow-lg p-3 mb-5 cake-forms rounded cake-input-form"
+				>
+					<MDBRow>
+						<div className="col-md-12  text-center">
+							<h3>Регистрация</h3>
 						</div>
-					</div>
-				</form>
-			</div>
-		);
-	}
+						<MDBCol md="4">{formGroup('Име:', 'text', 'Име', 'firstName', fields, setFields)}</MDBCol>
+						<MDBCol md="4">
+							{formGroup('Бащино име:', 'text', 'Бащино име ', 'middleName', fields, setFields)}
+						</MDBCol>
+						<MDBCol md="4">
+							{formGroup('Фамилия:', 'text', 'Фамилия ', 'lastName', fields, setFields)}
+						</MDBCol>
+					</MDBRow>
+					<MDBRow>
+						<MDBCol md="6">
+							{formGroup(
+								'Потребителско име:',
+								'text',
+								'Потребителско име',
+								'username',
+								fields,
+								setFields
+							)}
+						</MDBCol>
+						<MDBCol md="6">
+							{formGroup('Електронна поща:', 'text', 'Електронна поща', 'email', fields, setFields)}
+						</MDBCol>
+					</MDBRow>
+					<MDBRow>
+						<MDBCol md="6">{formGroup('Парола:', 'text', 'Парола', 'password', fields, setFields)}</MDBCol>
+						<MDBCol md="6">
+							{formGroup(
+								'Повтори парола:',
+								'text',
+								'Повтори парола',
+								'confirmPassword',
+								fields,
+								setFields
+							)}
+						</MDBCol>
+					</MDBRow>
+					<MDBRow>
+						<MDBCol md="6">
+							{formGroup('Личен номер:', 'text', 'Личен номер', 'personalNumber', fields, setFields)}
+						</MDBCol>
+						<MDBCol md="6">{formGroup('Ключ:', 'text', 'Ключ', 'keyNumber', fields, setFields)}</MDBCol>
+					</MDBRow>
+					<MDBCol md="12" className="p-0 m-0 mt-4">
+						<button type="submit" class="btn  submit-btn btn-rounded waves-effect btn-md btn-block">
+							Регистрация <i class="fa fa-forward" aria-hidden="true"></i>
+						</button>
+					</MDBCol>
+				</Form>
+			</MDBRow>
+		</MDBContainer>
+	);
 }
 
 export default Register;

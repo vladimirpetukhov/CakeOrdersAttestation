@@ -1,32 +1,28 @@
 import React from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import "mdbreact/dist/css/mdb.css";
+import "@fortawesome/fontawesome-free/css/all.min.css";
+import "bootstrap-css-only/css/bootstrap.min.css";
 import Navbar from './components/layouts/Navbar';
 import  Dashboard from './components/dashboard/Dashboard';
-import OrderDetails from './components/orders/OrderDetails';
 import Login from './components/auth/Login';
 import Register from './components/auth/Register';
-import CreateOrder, { StepForm } from './components/orders/CreateOrder';
-import COrder from './components/features/Checkout';
-import { createStore} from 'redux';
-import rootReducer from './store/reducers/rootreducer';
-import {Provider} from 'react-redux';
-import StickyFooter from './components/layouts/StickyFooter';
+import CreateOrder from './components/orders/CreateOrder';
 
-const store=createStore(rootReducer);
+
+
 
 function App() {
 	return (
-    <BrowserRouter>
-    <Provider store={store}></Provider>
+    <BrowserRouter>    
 			<div className="App">
 				<Navbar />
 				<Switch>
-          <Route exact path="/" component={Dashboard} />
-          <Route path='/order/:id' component={OrderDetails} />
+          <Route exact path="/" component={Dashboard} />          
           <Route path='/login' component={Login} />
           <Route path='/register' component={Register} />
-          <Route path='/create-order' component={StepForm} />
-          <Route path='/check' component={StepForm} />
+          <Route path='/create-order' component={CreateOrder} />
+          <Route path='/check' component={CreateOrder} />
         </Switch>
         
 			</div>

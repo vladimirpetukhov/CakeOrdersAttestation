@@ -1,49 +1,17 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  background-color: cornflowerblue;
+body{
+ 
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+.cake-input-form{
+  top:10vh;
 }
 
+.cake-forms{
+  background-color: #388e3c;
+}
 
-.input-field > button{
+.submit-btn{
   color: azure;
 }
 
-.input-field .left-btn{
-  margin-right: 5px;
-}
-
-form{
-  padding: 20px;
-  margin-top: 60px;
-}
-
-form button, form h5{
-  margin: 20px 0;
-}
-
-input[type=text]:not(.browser-default):focus:not([readonly]),
-input[type=email]:not(.browser-default):focus:not([readonly]),
-input[type=password]:not(.browser-default):focus:not([readonly]),
-textarea.materialize-textarea:focus:not([readonly]){
-  border-color: #0dc406;
-  box-shadow: khaki;
-  border-bottom: 1px solid;
-}
-
-input[type=text]:not(.browser-default):focus:not([readonly]) + label,
-textarea.materialize-textarea:focus:not([readonly]) + label,
-input[type=email]:not(.browser-default):focus:not([readonly]) + label,
-input[type=password]:not(.browser-default):focus:not([readonly]) + label{
-  color: #0dc406 !important;
-  
-}

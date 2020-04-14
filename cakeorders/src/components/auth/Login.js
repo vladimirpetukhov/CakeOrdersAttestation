@@ -1,48 +1,89 @@
-import React, { Component } from 'react';
-import { Button, ButtonGroup } from '@material-ui/core';
-import '../../../node_modules/materialize-css/dist/css/materialize.css';
+import React, { useState } from 'react';
+import { MDBCol, MDBContainer, MDBRow } from 'mdbreact';
+import Form from 'react-bootstrap/Form';
+import PetukhovaLogo from '../features/PetukhovaLogo';
 
-class Login extends Component {
-	state = {
-		username: '',
-		password: '',
+const formFields = {
+	username: '',
+	password: '',
+};
+
+function Login() {
+	const formGroup = (label, type, placeholder, name, fields, setFields) => {
+		return (
+			<Form.Group>
+				<Form.Label className="small  mb-0 active">{label}</Form.Label>
+				<div className="invalid-tooltip">
+                  Please provide a valid zip.
+                </div>
+				<Form.Control
+					type={type}
+					placeholder={placeholder}
+					value={fields[name]}
+					name={name}
+					data-testid={'register-' + name}
+					onChange={(e) => handleChange(e, fields, setFields, false)}
+					required
+				/>
+				
+			</Form.Group>
+		);
 	};
-	handleChange = e => {
-		this.setState({
-			[e.target.id]: e.target.value,
+	const [fields, setFields] = useState(formFields);
+
+	const handleChange = (event, fields, fieldsSet, isCheckbox) => {
+		event.persist();
+
+		var fieldValue;
+
+		isCheckbox ? (fieldValue = event.target.checked) : (fieldValue = event.target.value);
+
+		fieldsSet({
+			...fields,
+			[event.target.name]: fieldValue,
 		});
 	};
-	handleSubmit = e => {
-		e.preventDefault();
-		console.log(this.state);
-	};
-	render() {
-		return (
-			<div className="row ">
-				<form className="white z-depth-5 col s6 offset-s3" onSubmit={this.handleSubmit}>
-                <div className="row ">
-                <h4 className="blue-text center ">Вход</h4>
-                </div>
-					<div className="input-field">
-						<label htmlFor="username">Потребителско име:</label>
-						<input id="username" type="text" onChange={this.handleChange} />
-					</div>
-					<div className="input-field">
-						<label htmlFor="password">Парола:</label>
-						<input type="password" id="password" type="text" onChange={this.handleChange} />
-                    </div>
-                    <br/>
-					<div className="input-field ">
-						<Button className="btn blue lighten-1 z-depth-0 left-btn white-text">Вход</Button>
 
-						<Button type="reset" className="btn green lighten-1 z-depth-0 ">
-							Изчисти
-						</Button>
-					</div>
-				</form>
-			</div>
-		);
-	}
+	const handleSubmit = (e) => {
+		e.preventDefault();
+		e.target.className += " was-validated";
+		console.log(fields);
+	};
+
+	return (
+		<MDBContainer>
+			<PetukhovaLogo />
+			<MDBRow className="m-0">
+				<Form
+				noValidate
+					onSubmit={handleSubmit}
+					className="col-lg-8 col-md-10 mx-auto text-left shadow-lg p-3 mb-5 needs-validation  rounded "
+				>
+					<MDBRow>
+						<div className="col-md-12  text-center">
+							<h3>Вход</h3>
+						</div>
+						<MDBCol md="6">
+							{formGroup(
+								'Потребителско име:',
+								'text',
+								'Потребителско име',
+								'username',
+								fields,
+								setFields
+							)}
+						</MDBCol>
+						<MDBCol md="6">{formGroup('Парола:', 'text', 'Парола ', 'password', fields, setFields)}</MDBCol>
+					</MDBRow>
+					<MDBCol md="12" className="p-0 m-0 mt-4">
+						<button type="submit" class="btn  submit-btn btn-rounded waves-effect btn-md btn-block">
+							Вход <i class="fa fa-forward" aria-hidden="true"></i>
+						</button>
+					</MDBCol>
+				</Form>
+			</MDBRow>
+		</MDBContainer>
+	);
 }
 
 export default Login;

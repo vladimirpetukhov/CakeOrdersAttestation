@@ -1,0 +1,45 @@
+.front-page-lang {
+  display: inline-flex;
+}
+
+.front-page-lang .active {
+  color: #2196f3;
+  font-weight: 600;
+  margin-top: 8px;
+}
+
+.front-page-lang .divider {
+  padding-left: 8px;
+  margin-top: 7px;
+}
+
+.front-page-lang a {
+  padding-left: 8px;
+  color: #000;
+}
+
+.btn-grey span {
+  color: white;
+}
+
+.btn-grey {
+  margin-left: 0px !important;
+}
+
+.md-form {
+  margin-top: 0.5rem !important;
+}
+
+.md-form input[type="text"]:not(.browser-default).valid {
+  border-bottom: 1px rgb(206, 212, 218);
+  box-shadow: 0 1px 0 0 rgb(206, 212, 218);
+}
+
+.file-path {
+  pointer-events: none;
+}
+
+.close {
+  right: -12px !important;
+}
+
